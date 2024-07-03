@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "utils.h"
+#include "short_node.h"
 
 using namespace std;
 
@@ -11,5 +12,7 @@ int main() {
   std::vector<uint8_t> testInput = {0x01, 0x02, 0x03, 0x04};
   std::vector<uint8_t> testOutput = keccak256(testInput);
   std::cout << "Test output: " << testOutput.size() << std::endl << bytesToHexString(testOutput) << std::endl;
+  ShortNode node;
+  std::cout << "Test output: " <<  std::endl << bytesToHexString(node.Marshal()) << std::endl;
   return 0;
 }

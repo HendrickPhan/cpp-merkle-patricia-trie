@@ -12,12 +12,6 @@ struct NodeWrapper {
   vector<uint8_t> value;
 };
 
-// struct CommitReturn{
-//   vector<uint8_t> hash;
-//   vector<NodeWrapper> nodes;
-//   vector<vector<uint8_t>> oldKeys;
-// };
-
 class Trie {
 public:
   Trie(void);

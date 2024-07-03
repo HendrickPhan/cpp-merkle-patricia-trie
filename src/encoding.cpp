@@ -14,8 +14,6 @@ vector<uint8_t> CompactToHex(vector<uint8_t> compact){
     return null;
   }
   vector<uint8_t> hex(compact.size() * 2 + 1);
-
-
 };
 
 vector<uint8_t> KeyBytesToHex(vector<uint8_t> input){
@@ -43,7 +41,7 @@ vector<uint8_t> HexToKeyBytes(vector<uint8_t> hex){
 
 void decodeNibbles(vector<uint8_t> nibbles, vector<uint8_t> bytes){
   int bi = 0;
-  for (int ni = 0; ni < nibbles.size(); i+=2){
+  for (int ni = 0; ni < nibbles.size(); ni+=2){
     bytes[bi] = (nibbles[ni] << 4) | nibbles[ni + 1];
     bi++;
   }

@@ -1,0 +1,26 @@
+syntax = "proto3";
+package merkle_patricia_trie;
+
+option go_package = "/proto";
+option java_package = "com.meta_node.protos.compiled.merkle_patricia_trie";
+
+enum MPTNODE_TYPE {
+    FULL = 0;
+    SHORT = 1;
+    VALUE = 2;
+}
+
+message MPTNode {
+    MPTNODE_TYPE type = 1;
+    bytes data = 2;
+}
+
+message MPTFullNode {
+    repeated bytes nodes = 1; // 16 element of 32 bytes hash
+    bytes value = 2;
+}
+
+message MPTShortNode {
+    bytes key = 1;
+    bytes value = 2;
+}
