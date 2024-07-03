@@ -1,0 +1,4 @@
+/Users/hieuphandinhminh/Desktop/Repo/my/cpp-merkle-patricia-trie/build/CMakeFiles/cpp_merkle_patricia_trie_lib.dir
+/Users/hieuphandinhminh/Desktop/Repo/my/cpp-merkle-patricia-trie/build/CMakeFiles/cpp_merkle_patricia_trie.dir
+/Users/hieuphandinhminh/Desktop/Repo/my/cpp-merkle-patricia-trie/build/CMakeFiles/edit_cache.dir
+/Users/hieuphandinhminh/Desktop/Repo/my/cpp-merkle-patricia-trie/build/CMakeFiles/rebuild_cache.dir
