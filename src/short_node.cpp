@@ -32,15 +32,14 @@ void ShortNode::Unmarshal(vector<uint8_t> hash, vector<uint8_t> data) {
 
 
 vector<uint8_t> ShortNode::Marshal(){
-  // merkle_patricia_trie::MPTShortNode protoShortNode;
-  // protoShortNode.set_key(string(key.begin(), key.end()));
-  // vector<uint8_t> vv= this->value->Marshal(); 
-  // protoShortNode.set_value(string(vv.begin(), vv.end()));
-  // merkle_patricia_trie::MPTNode protoNode;
-  // protoNode.set_data(protoShortNode.SerializeAsString());
-  // protoNode.set_type(merkle_patricia_trie::SHORT);
-  // return vector<uint8_t>(protoNode.data().begin(), protoNode.data().end());
-  return vector<uint8_t>();
+  merkle_patricia_trie::MPTShortNode protoShortNode;
+  protoShortNode.set_key(string(key.begin(), key.end()));
+  vector<uint8_t> vv= this->value->Marshal(); 
+  protoShortNode.set_value(string(vv.begin(), vv.end()));
+  merkle_patricia_trie::MPTNode protoNode;
+  protoNode.set_data(protoShortNode.SerializeAsString());
+  protoNode.set_type(merkle_patricia_trie::SHORT);
+  return vector<uint8_t>(protoNode.data().begin(), protoNode.data().end());
 }
 
 
