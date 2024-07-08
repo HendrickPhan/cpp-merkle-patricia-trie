@@ -43,7 +43,9 @@ set(SOURCES
     src/hash_node.cpp
     src/value_node.cpp
     src/short_node.cpp
+    src/full_node.cpp
     src/encoding.cpp
+    src/hasher.cpp
     ${PROTO_SRCS}
     ${PROTO_HDRS}
 )

@@ -2,7 +2,10 @@
 #include <vector>
 #include "utils.h"
 #include "short_node.h"
+#include "full_node.h"
+#include "hash_node.h"
 #include "encoding.h"
+#include "hasher.h"
 
 using namespace std;
 
@@ -26,6 +29,22 @@ void testEncodingFunc() {
   // Test prefix len
   int prefixLen = PrefixLen(hexStringToBytes("0101010203"), hexStringToBytes("0101010303"));
   cout << "key bytes" << ", valid: " << (prefixLen == 3) << endl;
+  // Test hash with hasher
+  HashNode* hn = (HashNode*)hashData(hexStringToBytes(strKeyBytes));
+  cout << "hash node: " << bytesToHexString(hn->hash) << endl;
+  
+  // Test encoding
+  FullNode fn = FullNode();
+  cout << "empty full node data: " << bytesToHexString(
+      fn.Marshal()
+  ) << endl;
+
+  cout << "hash empty full node data: " << bytesToHexString(
+      keccak256(fn.Marshal())
+  ) << endl;
+  
+  //
+   
 }
 
 int main() {

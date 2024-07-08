@@ -24,12 +24,11 @@ void ShortNode::Unmarshal(vector<uint8_t> hash, vector<uint8_t> data) {
   if (HasTerm(key)) {
     this->value = new ValueNode(vector<uint8_t>(proto.value().begin(), proto.value().end()));
   }
-  // else {
-  //   this->value = new HashNode(vector<uint8_t>(proto.value().begin(), proto.value().end()));
-  // }
+  else {
+    this->value = new HashNode(vector<uint8_t>(proto.value().begin(), proto.value().end()));
+  }
   flag.hash = hash; 
 }
-
 
 vector<uint8_t> ShortNode::Marshal(){
   merkle_patricia_trie::MPTShortNode protoShortNode;
@@ -47,3 +46,9 @@ tuple<vector<uint8_t>, bool> ShortNode::Cache(){
   return make_tuple(flag.hash, flag.dirty);
 }
 
+Node* ShortNode::Copy(){
+  ShortNode* newNode = new ShortNode();
+  newNode->key = key;
+  newNode->value = value->Copy();
+  return newNode;
+}

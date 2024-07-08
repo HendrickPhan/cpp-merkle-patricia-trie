@@ -12,7 +12,9 @@ public:
   void Unmarshal(vector<uint8_t> _hash, vector<uint8_t> data);
   vector<uint8_t> Marshal();
   tuple<vector<uint8_t>, bool> Cache();
-  
+  Node* Copy();
+  NodeType Type() { return VALUE; }
+
   vector<uint8_t> data;
 private:
 };

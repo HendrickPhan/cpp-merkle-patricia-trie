@@ -1,4 +1,4 @@
-#pragma once
+#pragma once 
 #include <vector>
 #include <tuple>
 #include "node.h"
@@ -14,7 +14,9 @@ public:
   void Unmarshal(vector<uint8_t> _hash, vector<uint8_t> data);
   vector<uint8_t> Marshal();
   tuple<vector<uint8_t>, bool> Cache();
-  
+  Node* Copy();
+  NodeType Type() { return HASH; }
+
   vector<uint8_t> hash;
 private:
 };

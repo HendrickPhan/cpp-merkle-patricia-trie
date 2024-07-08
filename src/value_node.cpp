@@ -28,3 +28,7 @@ using namespace std;
   tuple<vector<uint8_t>, bool> ValueNode::Cache() {
     return make_tuple(vector<uint8_t>{}, true);
   }
+
+Node* ValueNode::Copy() {
+  return new ValueNode(data);
+}

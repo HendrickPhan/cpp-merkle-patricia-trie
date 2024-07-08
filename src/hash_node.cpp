@@ -30,3 +30,6 @@ tuple<vector<uint8_t>, bool> HashNode::Cache() {
   return make_tuple(hash, true);
 }
 
+Node* HashNode::Copy() {
+  return new HashNode(hash);
+}
