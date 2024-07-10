@@ -15,7 +15,7 @@ public:
   vector<uint8_t> Marshal();
   tuple<vector<uint8_t>, bool> Cache();
   Node* Copy();
-  NodeType Type() { return HASH; }
+  NodeType Type() { return NodeType::HASH; }
 
   vector<uint8_t> hash;
 private:

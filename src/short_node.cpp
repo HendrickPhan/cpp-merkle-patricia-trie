@@ -11,6 +11,12 @@ using namespace std;
 ShortNode::ShortNode() {
   
 }
+
+ShortNode::ShortNode(vector<uint8_t> key, Node* value, NodeFlag flag) {
+  this->key = key;
+  this->value = value;
+  this->flag = flag;
+}
 // Destructor
 ShortNode::~ShortNode() {
 }
@@ -38,7 +44,8 @@ vector<uint8_t> ShortNode::Marshal(){
   merkle_patricia_trie::MPTNode protoNode;
   protoNode.set_data(protoShortNode.SerializeAsString());
   protoNode.set_type(merkle_patricia_trie::SHORT);
-  return vector<uint8_t>(protoNode.data().begin(), protoNode.data().end());
+  string b = protoNode.SerializeAsString();
+  return vector<uint8_t>(b.begin(), b.end());
 }
 
 
@@ -50,5 +57,6 @@ Node* ShortNode::Copy(){
   ShortNode* newNode = new ShortNode();
   newNode->key = key;
   newNode->value = value->Copy();
+  newNode->flag = flag;
   return newNode;
 }

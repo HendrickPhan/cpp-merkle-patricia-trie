@@ -20,14 +20,15 @@ vector<uint8_t> HexToCompact(vector<uint8_t> hex){
   }
   vector<uint8_t> buf(hex.size() / 2 + 1); 
   buf[0] = terminator << 5;
+  vector<uint8_t> hexCp(hex.begin(), hex.end());
   if ((hex.size()&1) == 1){
     buf[0] |= 1 << 4;
-    buf[1] = hex[0];
+    buf[0] |= hex[0];
+    hexCp.erase(hexCp.begin());
   } 
   // create sub vector from buf[1] to the end
   vector<uint8_t> subvector(buf.begin() + 1, buf.end());
-  decodeNibbles(hex, subvector);
-  // copy the subvector to the buf
+  decodeNibbles(hexCp, subvector);
   copy(subvector.begin(), subvector.end(), buf.begin() + 1); 
   return buf;
 };
@@ -54,8 +55,8 @@ vector<uint8_t> KeyBytesToHex(vector<uint8_t> input){
   int l = input.size() * 2+ 1;
   vector<uint8_t> nibbles(l);
   for (int i = 0; i < input.size(); i++){
-    nibbles[i * 2] = input[i] >> 4;
-    nibbles[i * 2 + 1] = input[i] & 0xf;
+    nibbles[i * 2] = input[i] / 16;
+    nibbles[i * 2 + 1] = input[i] % 16;
   }
   nibbles[l - 1] = 16;
   return nibbles;
@@ -82,7 +83,10 @@ int PrefixLen(vector<uint8_t> a, vector<uint8_t> b){
   if (b.size() < length){
     length = b.size();
   }
-  while (i < a.size() && i < b.size() && a[i] == b[i]){
+  while (i < length){
+    if (a[i] != b[i]){
+      break;
+    }
     i++;
   }
   return i;

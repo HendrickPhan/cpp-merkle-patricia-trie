@@ -7,6 +7,7 @@
 #include <vector>
 #include <tuple>
 #include "utils.h" 
+#include "logger.h"
 
 using namespace std;
 
@@ -65,6 +66,8 @@ Node* FullNode::Copy(){
   for (int i = 0; i < TOTAL_CHILD_NODE; i++) {
     if (children[i]) {
       copy->children[i] = children[i]->Copy();
+    } else {
+      copy->children[i] = nullptr;
     }
   }
   copy->flag = flag;

@@ -5,7 +5,7 @@
 
 class ValueNode : public Node{
 public:
-  ValueNode(vector<uint8_t> _hash);
+  ValueNode(vector<uint8_t> _data);
   ValueNode();
   ~ValueNode(void);
 
@@ -13,7 +13,7 @@ public:
   vector<uint8_t> Marshal();
   tuple<vector<uint8_t>, bool> Cache();
   Node* Copy();
-  NodeType Type() { return VALUE; }
+  NodeType Type() { return NodeType::VALUE; }
 
   vector<uint8_t> data;
 private:

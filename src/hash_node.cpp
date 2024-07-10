@@ -31,5 +31,5 @@ tuple<vector<uint8_t>, bool> HashNode::Cache() {
 }
 
 Node* HashNode::Copy() {
-  return new HashNode(hash);
+  return new HashNode(vector<uint8_t>(this->hash.begin(), this->hash.end()));
 }

@@ -3,8 +3,6 @@ project(cpp_merkle_patricia_trie)
 
 set(CMAKE_CXX_STANDARD 17)
 
-
-
 # Set compiler flags (choose either -Os or -O3)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
@@ -40,12 +38,15 @@ set(SOURCES
     src/main.cpp
     src/trie.cpp
     src/utils.cpp
+    src/node.cpp
     src/hash_node.cpp
     src/value_node.cpp
     src/short_node.cpp
     src/full_node.cpp
     src/encoding.cpp
     src/hasher.cpp
+    src/trie_reader.cpp
+    src/logger.cpp
     ${PROTO_SRCS}
     ${PROTO_HDRS}
 )

@@ -28,3 +28,12 @@ struct NodeFlag{
   vector<uint8_t> hash;
   bool dirty;
 };
+
+NodeFlag inline NewFlag() {
+  return NodeFlag{
+    vector<uint8_t>(),
+    true 
+  };
+}
+
+Node* DecodeNode(vector<uint8_t> hash, vector<uint8_t> data);

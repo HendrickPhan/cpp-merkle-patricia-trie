@@ -15,7 +15,7 @@ public:
   vector<uint8_t> Marshal();
   tuple<vector<uint8_t>, bool> Cache();
   Node* Copy();
-  NodeType Type() { return FULL; }
+  NodeType Type() { return NodeType::FULL; }
   
   Node* children[TOTAL_CHILD_NODE];
   NodeFlag flag;
