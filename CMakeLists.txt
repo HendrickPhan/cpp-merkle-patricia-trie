@@ -10,23 +10,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mtune=native")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ffunction-sections -fdata-sections")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -finline-functions")
 
-# Find Protobuf package
-find_package(Protobuf REQUIRED)
-find_package(absl REQUIRED)
-
-# Include Protobuf directories
-include_directories(${Protobuf_INCLUDE_DIRS})
-
-
-set(Protobuf_PROTOC_EXECUTABLE /usr/bin/protoc)
-
-# Generate the C++ sources from the .proto files
-# Define the .proto files
-set(PROTO_FILES
-  proto/merkle_patricia_trie.proto
-)
-
-protobuf_generate_cpp(PROTO_SRCS PROTO_HDRS ${PROTO_FILES})
 
 
 # Include directories
@@ -47,6 +30,7 @@ set(SOURCES
     src/hasher.cpp
     src/trie_reader.cpp
     src/logger.cpp
+    src/merkle_patricia_trie.pb.cc
     ${PROTO_SRCS}
     ${PROTO_HDRS}
 )
@@ -55,6 +39,8 @@ set(SOURCES
 file(GLOB KECCAK_SOURCES
     3rdparty/keccak/*.c
 )
+
+link_directories(${CMAKE_SOURCE_DIR}/lib)
 
 # Create library
 add_library(${PROJECT_NAME}_lib STATIC
@@ -71,8 +57,8 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     ${PROJECT_NAME}_lib
 )
+
 # Link Protobuf libraries
 target_link_libraries(${PROJECT_NAME} 
-  ${Protobuf_LIBRARIES}
-  absl::log_internal_check_op
+  protobuf
 )

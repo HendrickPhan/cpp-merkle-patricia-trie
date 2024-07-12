@@ -37,7 +37,7 @@ tuple<Node*, Node*> hashNode(Node* node){
 tuple<Node*, Node*> hashShortNodeChildren(ShortNode* n) {
   Node* collapsed = n->Copy();
   Node* cached = n->Copy();
-  Logger::LogInfo("hashShortNodeChildren type origin (): " + to_string(n->value->Type())
+  Logger::LogDebug("hashShortNodeChildren type origin (): " + to_string(n->value->Type())
     + "cached type: " + to_string(((ShortNode*)cached)->value->Type())
   );
   ((ShortNode*)collapsed)->key = HexToCompact(n->key);
@@ -48,7 +48,7 @@ tuple<Node*, Node*> hashShortNodeChildren(ShortNode* n) {
     ) = hashNode(((ShortNode*)n)->value);
   }
 
-  Logger::LogInfo("hashShortNodeChildren 2 type origin (): " + to_string(n->value->Type())
+  Logger::LogDebug("hashShortNodeChildren 2 type origin (): " + to_string(n->value->Type())
     + "cached type: " + to_string(((ShortNode*)cached)->value->Type())
   );
   return make_tuple(collapsed, cached);

@@ -8,6 +8,9 @@
 #include "hasher.h"
 #include "trie.h"
 #include "logger.h"
+#include <emscripten/emscripten.h>
+#include <emscripten/bind.h>
+#include <emscripten/val.h>
 
 using namespace std;
 
@@ -92,15 +95,24 @@ void test10KInsertTrie() {
       vector<uint8_t>(key.begin(), key.end()),
       vector<uint8_t>(value.begin(), value.end())
     );
-    string root = bytesToHexString(trie.Hash());
-    Logger::LogInfo("Root at: " + to_string(i) + ", root: " + root );
   }
+  string root = bytesToHexString(trie.Hash());
+  Logger::LogInfo(", root: " + root );
 }
 
 int main() {
-  Logger::level = 5;
+  Logger::level = 1;
   // testEncodingFunc();
   // testTrie();
   test10KInsertTrie();
   return 0;
 }
+
+// Export the function so it can be called from JavaScript
+extern "C" {
+
+EMSCRIPTEN_BINDINGS(mpt_module){
+  emscripten::function("main", &main);
+}
+}
+
