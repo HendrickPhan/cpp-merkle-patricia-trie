@@ -4,6 +4,8 @@
 #include "merkle_patricia_trie.pb.h"
 #include <iostream>
 #include "encoding.h"
+#include "logger.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -26,11 +28,13 @@ void ShortNode::Unmarshal(vector<uint8_t> hash, vector<uint8_t> data) {
   merkle_patricia_trie::MPTShortNode proto;
   // convert data to 
   proto.ParseFromString(string(data.begin(), data.end()));
-  key = vector<uint8_t>(proto.key().begin(), proto.key().end());
+  key = CompactToHex(vector<uint8_t>(proto.key().begin(), proto.key().end()));
   if (HasTerm(key)) {
+    Logger::LogDebug("ShortNode::Unmarshal key has term: " + bytesToHexString(key));
     this->value = new ValueNode(vector<uint8_t>(proto.value().begin(), proto.value().end()));
   }
   else {
+    Logger::LogDebug("ShortNode::Unmarshal key doesn't have term: " + bytesToHexString(key));
     this->value = new HashNode(vector<uint8_t>(proto.value().begin(), proto.value().end()));
   }
   flag.hash = hash; 

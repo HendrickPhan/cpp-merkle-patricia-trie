@@ -3,10 +3,10 @@
  *   All rights reserved.
  */
 #pragma once
-using namespace std;
+#include<vector>
 
 class DB {
 public:
-  virtual vector<uint8_t> Get(vector<uint8_t> key);
+  virtual std::vector<uint8_t> Get(std::vector<uint8_t> key) = 0;
 }; 
 

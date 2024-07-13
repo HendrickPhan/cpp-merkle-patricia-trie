@@ -20,11 +20,16 @@ struct NodeWrapper {
 class Trie {
 public:
   Trie(void);
+  Trie(Node* rootHash, DB* db);
   ~Trie(void);
 
   vector<uint8_t> Get(vector<uint8_t> key);
   void Update(vector<uint8_t> key, vector<uint8_t> value);
   vector<uint8_t>Hash();
+
+  string GetHex(string key);
+  void UpdateHex(string key, string value);
+  string HashHex();
   // tuple<vector<uint8_t>, vector<NodeWrapper>, vector<vector<uint8_t>>> Commit();
   
 private:

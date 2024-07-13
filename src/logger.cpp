@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int Logger::level = 5;
+int Logger::level = 0;
 
 Logger::Logger(int _level){
   level = _level;
@@ -17,8 +17,16 @@ void outputTime(){
   cout << ltm->tm_hour << ":" << ltm->tm_min << ":" << ltm->tm_sec;
 }
 
+void Logger::Log(std::string message){
+  outputTime();
+  cout << " [LOG] " << message << endl;
+};
+
 void Logger::LogInfo(std::string message){
   outputTime();
+  if (level < 1) {
+    return;
+  }
   cout << " [INFO] " << message << endl;
 };
 

@@ -9,6 +9,8 @@
 #include "trie_reader.h"
 #include "db.h"
 
+using namespace std;
+
 class TrieReader {
 public:
   TrieReader(DB* _db);

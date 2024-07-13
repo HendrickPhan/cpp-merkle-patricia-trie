@@ -14,9 +14,6 @@ TrieReader::TrieReader(void) {
 }
 
 TrieReader::~TrieReader(void) {
-  if(db){
-    delete db;
-  }
 }
 
 void TrieReader::setDB(DB* _db) {

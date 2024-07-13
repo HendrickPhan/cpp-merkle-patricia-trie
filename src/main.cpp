@@ -8,9 +8,6 @@
 #include "hasher.h"
 #include "trie.h"
 #include "logger.h"
-#include <emscripten/emscripten.h>
-#include <emscripten/bind.h>
-#include <emscripten/val.h>
 
 using namespace std;
 
@@ -107,12 +104,3 @@ int main() {
   test10KInsertTrie();
   return 0;
 }
-
-// Export the function so it can be called from JavaScript
-extern "C" {
-
-EMSCRIPTEN_BINDINGS(mpt_module){
-  emscripten::function("main", &main);
-}
-}
-

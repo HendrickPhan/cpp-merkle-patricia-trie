@@ -26,6 +26,7 @@ void FullNode::Unmarshal(vector<uint8_t> hash, vector<uint8_t> data) {
   merkle_patricia_trie::MPTFullNode proto;
   // convert data to 
   proto.ParseFromString(string(data.begin(), data.end()));
+  Logger::Log("Fullnode node size: " + std::to_string(proto.nodes_size()));
   for (int i = 0; i < TOTAL_CHILD_NODE; i++) {
     // check if children is empty bytes or 32 zero bytes
     vector<uint8_t> hash = vector<uint8_t>(proto.nodes(i).begin(), proto.nodes(i).end());

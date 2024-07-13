@@ -7,15 +7,17 @@ EMCC_OPT+=-s SINGLE_FILE=1
 EMCC_OPT+=-lembind
 EMCC_OPT+=-fno-threadsafe-statics -fno-stack-protector
 EMCC_OPT+=-s INITIAL_MEMORY=64MB -s MAXIMUM_MEMORY=4GB -s ALLOW_MEMORY_GROWTH
+EMCC_OPT+=-s EXPORTED_RUNTIME_METHODS=stringToUTF8,lengthBytesUTF8,UTF8ToString,stringToNewUTF8
 # Define the source files and target
 KECCAKDIR = ../3rdparty/keccak
 THIRDPARTYDIR = ../3rdparty
 SRCDIR = ../src
+WEBASSEMBLY_SRCDIR = ./src
 
-INC = -I../include -I../3rdparty/keccak  -I../3rdparty -I../proto
+INC = -I../include -I../3rdparty/keccak  -I../3rdparty -I../proto -I../proto -I ./include
 
 LIBDIR = ../web_assembly/lib 
-SOURCES = $(wildcard $(SRCDIR)/*.cpp $(SRCDIR)/*.cc $(KECCAKDIR)/*.c)
+SOURCES = $(filter-out $(SRCDIR)/main.cpp, $(wildcard $(SRCDIR)/*.cpp $(SRCDIR)/*.cc $(KECCAKDIR)/*.c $(WEBASSEMBLY_SRCDIR)/*.cpp))
 TARGET = merkle_patricia_trie.js
 
 # Default target

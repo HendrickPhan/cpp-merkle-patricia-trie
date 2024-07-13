@@ -6,6 +6,7 @@
 #include "hash_node.h"
 #include "value_node.h"
 #include "encoding.h"
+#include "db.h"
 #include "logger.h"
 #include <iostream>
 
@@ -13,6 +14,12 @@ using namespace std;
 
 Trie::Trie(void) {
   root = nullptr;
+  commited = false;
+}
+
+Trie::Trie(Node *_root, DB* db) {
+  root = _root;
+  reader = TrieReader(db);
   commited = false;
 }
 
@@ -116,6 +123,28 @@ void Trie::Update(vector<uint8_t> key, vector<uint8_t> value){
   }
   vector<uint8_t> hashedKey = keccak256(key);
   return update(hashedKey, value);
+};
+
+string Trie::GetHex(string hkey) {
+  vector<uint8_t> key = hexStringToBytes(hkey);
+  vector<uint8_t> value = Get(key);
+  Logger::Log("Trie::GetHex key " + hkey + " value " + bytesToHexString(value));
+  return bytesToHexString(value);
+}
+
+void Trie::UpdateHex(string hkey, string hvalue){
+  if(commited){
+    throw "Already commited";
+  }
+  vector<uint8_t> key = hexStringToBytes(hkey);
+  vector<uint8_t> value = hexStringToBytes(hvalue);
+  vector<uint8_t> hashedKey = keccak256(key);
+  return update(hashedKey, value);
+};
+
+string Trie::HashHex(){
+  vector<uint8_t> hash = Hash();
+  return bytesToHexString(hash);
 };
 
 void Trie::update(vector<uint8_t> key, vector<uint8_t> value){
