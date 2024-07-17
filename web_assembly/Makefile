@@ -7,7 +7,9 @@ EMCC_OPT+=-s SINGLE_FILE=1
 EMCC_OPT+=-lembind
 EMCC_OPT+=-fno-threadsafe-statics -fno-stack-protector
 EMCC_OPT+=-s INITIAL_MEMORY=64MB -s MAXIMUM_MEMORY=4GB -s ALLOW_MEMORY_GROWTH
-EMCC_OPT+=-s EXPORTED_RUNTIME_METHODS=stringToUTF8,lengthBytesUTF8,UTF8ToString,stringToNewUTF8
+EMCC_OPT+=-s EXPORTED_RUNTIME_METHODS=stringToUTF8,lengthBytesUTF8,UTF8ToString,stringToNewUTF8,addFunction
+EMCC_OPT+=-s RESERVED_FUNCTION_POINTERS=100000
+EMCC_OPT+=-s WASM_BIGINT
 # Define the source files and target
 KECCAKDIR = ../3rdparty/keccak
 THIRDPARTYDIR = ../3rdparty

@@ -16,12 +16,12 @@
 
 using namespace std;
 
-Trie NewTrieWithJsFetchDB(string address, string rootHash) {
+Trie NewTrieWithJsFetchDB(string rootHash, JsFetchDB* jsFetchDB) {
   Node *root = nullptr;
   if(rootHash != ""){
     root = new HashNode(hexStringToBytes(rootHash));
   }
-  return Trie(root, new JsFetchDB(address));
+  return Trie(root, jsFetchDB);
 }
 
 // Export the function so it can be called from JavaScript
@@ -34,12 +34,13 @@ extern "C" {
             .function("GetHex", &Trie::GetHex)
             .function("UpdateHex", &Trie::UpdateHex)
             .function("HashHex", &Trie::HashHex);
+
         emscripten::class_<JsFetchDB>("JsFetchDB")
-          .constructor<std::string>()
-          .function("Get", &JsFetchDB::Get);
+          .constructor<int>()
+          .function("GetCurrentGetKey", &JsFetchDB::GetCurrentGetKey)
+          .function("SetCurrentGetValue", &JsFetchDB::SetCurrentGetValue);
 
-        emscripten::function("NewTrieWithJsFetchDB", &NewTrieWithJsFetchDB);
-
+        emscripten::function("NewTrieWithJsFetchDB", &NewTrieWithJsFetchDB, emscripten::allow_raw_pointers());
     }
 }
 
