@@ -13,13 +13,18 @@ using namespace std;
 #define EXTERN
 #endif
 
-
 // Define a C++ function that will call JavaScript to fetch data
 std::string JsFetchDB::get_data_from_js(std::string key) {
   currentGetKey = key;
+  // Reset the promise
+  dataPromise = std::promise<std::string>();
+
   void (*jsFetchFnc)() = reinterpret_cast<void (*)()>(fetchFncPtr);
   jsFetchFnc();
-  return currentGetValue;
+
+  // Wait for the promise to be fulfilled
+  std::future<std::string> dataFuture = dataPromise.get_future();
+  return dataFuture.get();
 }
 
 // Constructor
@@ -44,5 +49,5 @@ string JsFetchDB::GetCurrentGetKey(){
 };
 
 void JsFetchDB::SetCurrentGetValue(string value){
-  currentGetValue = value;
+  dataPromise.set_value(value);
 };

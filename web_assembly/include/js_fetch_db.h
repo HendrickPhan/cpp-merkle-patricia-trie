@@ -1,5 +1,7 @@
 #pragma once
 #include "db.h"
+#include <future>
+#include <functional>
 
 using namespace std;
 
@@ -7,8 +9,8 @@ class JsFetchDB: public DB {
 public:
   int fetchFncPtr;
   
+  std::promise<std::string> dataPromise;
   string currentGetKey;
-  string currentGetValue;
 
   string get_data_from_js(string key);
 
