@@ -9,8 +9,8 @@ class JsFetchDB: public DB {
 public:
   int fetchFncPtr;
   
-  std::promise<std::string> dataPromise;
   string currentGetKey;
+  string currentValue;
 
   string get_data_from_js(string key);
 

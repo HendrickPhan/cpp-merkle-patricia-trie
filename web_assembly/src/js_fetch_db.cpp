@@ -16,15 +16,17 @@ using namespace std;
 // Define a C++ function that will call JavaScript to fetch data
 std::string JsFetchDB::get_data_from_js(std::string key) {
   currentGetKey = key;
-  // Reset the promise
-  dataPromise = std::promise<std::string>();
+  currentValue = "";
 
   void (*jsFetchFnc)() = reinterpret_cast<void (*)()>(fetchFncPtr);
   jsFetchFnc();
-
-  // Wait for the promise to be fulfilled
-  std::future<std::string> dataFuture = dataPromise.get_future();
-  return dataFuture.get();
+  while(1){
+    if(currentValue != ""){
+      break;
+    }
+    emscripten_sleep(10);
+  }
+  return currentValue;
 }
 
 // Constructor
@@ -49,5 +51,5 @@ string JsFetchDB::GetCurrentGetKey(){
 };
 
 void JsFetchDB::SetCurrentGetValue(string value){
-  dataPromise.set_value(value);
+  currentValue = value;
 };
