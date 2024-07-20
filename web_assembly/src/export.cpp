@@ -36,7 +36,7 @@ extern "C" {
             .function("HashHex", &Trie::HashHex);
 
         emscripten::class_<JsFetchDB>("JsFetchDB")
-          .constructor<int>()
+          .constructor<>()
           .function("GetCurrentGetKey", &JsFetchDB::GetCurrentGetKey)
           .function("SetCurrentGetValue", &JsFetchDB::SetCurrentGetValue);
 

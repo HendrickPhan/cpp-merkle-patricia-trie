@@ -13,36 +13,32 @@ using namespace std;
 #define EXTERN
 #endif
 
-// Define a C++ function that will call JavaScript to fetch data
-std::string JsFetchDB::get_data_from_js(std::string key) {
-  currentGetKey = key;
-  currentValue = "";
-
-  void (*jsFetchFnc)() = reinterpret_cast<void (*)()>(fetchFncPtr);
-  jsFetchFnc();
-  while(1){
-    if(currentValue != ""){
-      break;
-    }
-    emscripten_sleep(10);
-  }
-  return currentValue;
-}
-
 // Constructor
-JsFetchDB::JsFetchDB(int ptr) {
-  fetchFncPtr = ptr;
+JsFetchDB::JsFetchDB() {
 }
 
 // Destructor
 JsFetchDB::~JsFetchDB() {
 }
 
+
+EM_ASYNC_JS(int, get_data_from_js, (), {
+  await GLOBAL.GetTrieValue();
+  return 1
+});
+
+
+
 vector<uint8_t> JsFetchDB::Get(vector<uint8_t> key){
   string hexKey = bytesToHexString(key);
-  string hexData = get_data_from_js(hexKey);
-  Logger::Log("Got data from JS: " + hexData);
-  return hexStringToBytes(hexData);
+  currentGetKey = hexKey;
+  valueSet = false;
+  get_data_from_js();
+  while(!valueSet){
+    emscripten_sleep(10);
+  }
+  Logger::Log("Got data from JS: " + currentValue);
+  return hexStringToBytes(currentValue);
 };
 
 
@@ -52,4 +48,6 @@ string JsFetchDB::GetCurrentGetKey(){
 
 void JsFetchDB::SetCurrentGetValue(string value){
   currentValue = value;
+  valueSet = true;
 };
+

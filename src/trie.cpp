@@ -9,6 +9,7 @@
 #include "db.h"
 #include "logger.h"
 #include <iostream>
+#include <emscripten/emscripten.h>
 
 using namespace std;
 
@@ -125,11 +126,19 @@ void Trie::Update(vector<uint8_t> key, vector<uint8_t> value){
   return update(hashedKey, value);
 };
 
+EM_JS(int, complete_resolve, (const char* value), {
+  GLOBAL.resolve(UTF8ToString(value));
+  return 1
+});
+
 string Trie::GetHex(string hkey) {
   vector<uint8_t> key = hexStringToBytes(hkey);
   vector<uint8_t> value = Get(key);
   Logger::Log("Trie::GetHex key " + hkey + " value " + bytesToHexString(value));
-  return bytesToHexString(value);
+  string rs = bytesToHexString(value);
+  Logger::Log("return " + rs);
+  complete_resolve(rs.c_str());
+  return rs; 
 }
 
 void Trie::UpdateHex(string hkey, string hvalue){

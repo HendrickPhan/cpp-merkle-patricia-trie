@@ -7,17 +7,15 @@ using namespace std;
 
 class JsFetchDB: public DB {
 public:
-  int fetchFncPtr;
   
   string currentGetKey;
   string currentValue;
-
-  string get_data_from_js(string key);
+  bool valueSet = false;
 
   string GetCurrentGetKey();
   void SetCurrentGetValue(string value);
 
-  JsFetchDB(int ptr);
+  JsFetchDB();
 
   ~JsFetchDB();
   vector<uint8_t> Get(vector<uint8_t> key);
