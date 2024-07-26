@@ -28,6 +28,12 @@ EM_ASYNC_JS(int, get_data_from_js, (), {
 });
 
 
+// EM_ASYNC_JS(char*, getAccountStateCodeJs, (const char *address), {
+//   // call API to get data
+//   var rs = await GLOBAL.getAccountStateCodeJs(UTF8ToString(address));          
+//   console.log("getAccountStateCodeJs", rs);
+//   return stringToNewUTF8(rs);
+// });
 
 vector<uint8_t> JsFetchDB::Get(vector<uint8_t> key){
   string hexKey = bytesToHexString(key);

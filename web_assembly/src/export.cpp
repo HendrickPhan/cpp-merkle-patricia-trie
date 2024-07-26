@@ -10,6 +10,7 @@
 #include "logger.h"
 #include "js_fetch_db.h"
 #include "db.h"
+#include "memory_db.h"
 #include <emscripten/emscripten.h>
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
@@ -22,6 +23,14 @@ Trie NewTrieWithJsFetchDB(string rootHash, JsFetchDB* jsFetchDB) {
     root = new HashNode(hexStringToBytes(rootHash));
   }
   return Trie(root, jsFetchDB);
+}
+
+Trie NewTrieWithMemoryDB(string rootHash, MemoryDB* memoryDB) {
+  Node *root = nullptr;
+  if(rootHash != ""){
+    root = new HashNode(hexStringToBytes(rootHash));
+  }
+  return Trie(root, memoryDB);
 }
 
 // Export the function so it can be called from JavaScript
@@ -41,6 +50,13 @@ extern "C" {
           .function("SetCurrentGetValue", &JsFetchDB::SetCurrentGetValue);
 
         emscripten::function("NewTrieWithJsFetchDB", &NewTrieWithJsFetchDB, emscripten::allow_raw_pointers());
+        emscripten::function("NewTrieWithMemoryDB", &NewTrieWithMemoryDB, emscripten::allow_raw_pointers());
+
+        emscripten::class_<MemoryDB>("MemoryDB")
+          .constructor<const vector<string>&, const vector<string>&>()
+          .function("Get", &MemoryDB::Get);
+
+        emscripten::register_vector<std::string>("vector<string>");
     }
 }
 
